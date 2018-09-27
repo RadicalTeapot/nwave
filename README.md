@@ -1,4 +1,4 @@
-# nWave sample tools
+# nWave scripts sample
 Sample of tools developed for nWave Digital Pictures.
 
 Python samples containing tools developed for Autodesk Maya and SideFx
