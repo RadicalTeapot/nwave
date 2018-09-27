@@ -167,15 +167,7 @@ class Controller(object):
         # Get the assembly id for sets.
         assembly_id = None
         if category is zefir.ASSET_TYPES.SET_ELEMENT:
-            # Find the category the shot instance belongs to
-            asset_category = shot_instance.asset.category
-            # Get the asset representing the category
-            asset = self._model.context.find_asset(code=asset_category.code)
-            if (
-                asset and
-                asset.asset_type is zefir.ASSET_TYPES.ASSEMBLY
-            ):
-                assembly_id = int(asset.id)
+            assembly_id = self._getAssemblyId(shot_instance)
 
         uv_component_id = None
         if (
@@ -183,7 +175,7 @@ class Controller(object):
             category is zefir.ASSET_TYPES.PROP
         ):
             uv_stage_components = [
-                component.stage
+                component
                 for component in shot_instance.components
                 if component.stage == zefir.STAGES.UVS and
                 component.variant in variations
@@ -208,6 +200,55 @@ class Controller(object):
             current_stage=int(components[0].id),
             is_asset_context=asset_context_data
         )
+
+    def _getAssemblyId(self, shot_instance):
+        # # Find the category the shot instance belongs to
+        # asset_category = shot_instance.asset.category
+        # # Get the asset representing the category
+        # asset = self._model.context.find_asset(code=asset_category.code)
+        # if (
+        #     asset and
+        #     asset.asset_type is zefir.ASSET_TYPES.ASSEMBLY
+        # ):
+        #     assembly_id = int(asset.id)
+
+        shot = shot_instance.shot
+        asset_groups = shot.asset_groups
+
+        group = None
+        for asset_group in asset_groups:
+            for asset_group_instance in asset_group.asset_group_instances:
+                if asset_group_instance.asset != shot_instance.asset:
+                    continue
+                if (
+                    asset_group_instance.instance_number ==
+                    shot_instance.instance_number
+                ):
+                    group = asset_group
+                    break
+        if not group:
+            return
+
+        code = group.code
+        if str(group.code).startswith('asm_'):
+            code = group.code[4:]
+
+        assembly_name = '_'.join(code.split('_')[:-2])
+        variant = code.split('_')[-1]
+
+        assembly = self._model.context.find_asset(code=assembly_name)
+        if not assembly:
+            return
+
+        component = self._model.context.find_asset_component(
+            asset=assembly,
+            variant=variant,
+            stage=zefir.STAGES.ASSEMBLY
+        )
+        if not component:
+            return
+
+        return component.id
 
     def _getAsset(self, category, parm_id):
         """Get an asset from the model data.
@@ -295,7 +336,7 @@ class Controller(object):
         """Extract the path to alembic files for selected assets."""
         if self._model.isEmpty():
             DisplayHoudiniDialog.displayHoudiniDialog(
-                'No loaded data'
+                'No loaded data',
                 'No data is available, make sure Zefir data has been loaded.',
                 severity=DisplayHoudiniDialog.SeverityTypes.WARNING,
             )
