@@ -1,0 +1,19 @@
+[
+  "test_Controller.py::TestFenixCommitter::()::test_init", 
+  "test_Controller.py::TestFenixCommitter::()::test_add_remove_assets", 
+  "test_Controller.py::TestFenixCommitter::()::test_udpate_asset", 
+  "test_Controller.py::TestFenixCommitter::()::test_get_alembic_effect_meshes", 
+  "test_Controller.py::TestFenixCommitter::()::test_get_alembic_effect_attributes", 
+  "test_Controller.py::TestFenixCommitter::()::test_export_alembic", 
+  "test_Controller.py::TestFenixCommitter::()::test_import_alembic", 
+  "test_Controller.py::TestFenixCommitter::()::test_set_alembic_effect_attributes", 
+  "test_Controller.py::TestFenixCommitter::()::test_clean_geometries", 
+  "test_Controller.py::TestFenixCommitter::()::test_cache_geometries", 
+  "test_Controller.py::TestFenixCommitter::()::test_generate_effect_alembic", 
+  "test_Controller.py::TestFenixCommitter::()::test_commit_locally", 
+  "test_Controller.py::TestFenixCommitter::()::test_commit_sanity_no_component", 
+  "test_Controller.py::TestFenixCommitter::()::test_commit_sanity_duplicate_name", 
+  "test_Controller.py::TestFenixCommitter::()::test_commit_sanity_no_effects_node", 
+  "test_Controller.py::TestFenixCommitter::()::test_commit", 
+  "test_Controller.py::TestFenixCommitter::()::test_remote_commit"
+]

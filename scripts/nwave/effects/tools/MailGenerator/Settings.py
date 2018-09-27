@@ -9,8 +9,7 @@ class Settings:
 
     RECIPIENTS = [
         'grp_sup_corgi@nwavedigital.com',
-        'grp_lgtcomp_corgi@nwavedigital.com',
-        'ivetep@nwavedigital.com'
+        'grp_lgtcomp_corgi@nwavedigital.com'
     ]
 
     # Path to internal mail server

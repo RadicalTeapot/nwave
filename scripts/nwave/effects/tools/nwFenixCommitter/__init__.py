@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Tool description."""
 
-from Controller import Controller
+from Controller import Controller as c
 from Model import Model
 from View import View
 
@@ -11,11 +11,12 @@ from nwave.effects.tools.nwFXTDTools.getMayaWindow import getMayaWindow
 
 
 def main():
-    """Launch the Pair Connector."""
+    """Launch the Fenix Committer."""
     if mc.window(View.object_name, q=True, ex=True):
         mc.deleteUI(View.object_name)
 
     view = View(getMayaWindow())
-    Controller(Model(), view)
+    controller = c(Model(), view)
 
-    view.show()
+    if controller.valid:
+        view.show()
